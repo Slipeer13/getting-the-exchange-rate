@@ -9,6 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -25,7 +29,8 @@ class CurrencyServiceImplTest {
 
     @Test
     void getCurrency() {
-        ResponseEntity<Currency> currency = client.getCurrency("2023-01-01", currencyApiKey, base);
+        String date = LocalDate.now(ZoneId.of("GMT")).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        ResponseEntity<Currency> currency = client.getCurrency(date, currencyApiKey, base);
         assertEquals(currency.getStatusCode(), HttpStatusCode.valueOf(200));
         assertNotNull(currency.getBody());
         assertEquals(currency.getBody().getBase(), base);
