@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @Service
@@ -22,7 +23,7 @@ public class GifServiceImpl implements GifService{
 
     @Override
     public ResponseEntity<Gif> getGif(String currencyCode) {
-        LocalDate date = LocalDate.now();
+        LocalDate date = LocalDate.now(ZoneId.of("GMT"));
         String today = formattedDate(date);
         String yesterday = formattedDate(date.minusDays(1));
         Double rateCurrencyNow = currencyService.getRateCurrency(today, currencyCode);
