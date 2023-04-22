@@ -16,7 +16,7 @@
 В ответ на запрос приложение возвращает GIF в виде JSON (shema: https://developers.giphy.com/docs/api/schema), 
 соответствующее курсу выбранной валюты. Если курс сегодня выше, чем вчера возвращается GIF с тегом "rich", если ниже - то "broke".
 ## Технологии
-Приложение написано на языке Java с использованием фреймворка Spring Boot.
+Приложение написано на языке Java(JavaVersion.VERSION_17) с использованием фреймворка Spring Boot version "3.0.5".
 Для получения курсов обмена используется API сервиса https://openexchangerates.org/.
 Для получения Gif используется API сервиса https://developers.giphy.com/docs/api/endpoint#random
 
