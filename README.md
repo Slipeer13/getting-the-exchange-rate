@@ -12,7 +12,7 @@
 ```
 /gif/{currency_code}
 ```
-где {currency_code} - это код выбранной валюты (например, USD, EUR, GBP и т.д.) список: https://en.wikipedia.org/wiki/ISO_4217
+где {currency_code} - это код выбранной валюты (например, USD, EUR, GBP и т.д.) список: https://en.wikipedia.org/wiki/ISO_4217.
 В ответ на запрос приложение возвращает GIF в виде JSON (shema: https://developers.giphy.com/docs/api/schema), 
 соответствующее курсу выбранной валюты. Если курс сегодня выше, чем вчера возвращается GIF с тегом "rich", если ниже - то "broke".
 ## Технологии
