@@ -21,5 +21,5 @@
 ## Сборка и запуск
 - Для сборки проекта команда в корневой директории приложения: gradlew build
 - Для сборки образа докер команда в корневой директории приложения: docker build -t getting-the-exchange-rate:0.0.1 .
-- Для запуска образа докер: docker run -p 8080:8080 getting-the-exchange-rate:0.0.1 
+- Для запуска образа докер(например хост 8080): docker run -p 8080:8080 getting-the-exchange-rate:0.0.1 
 - Готовый образ докер: https://hub.docker.com/r/slipeer13/getting-the-exchange-rate
