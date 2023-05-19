@@ -2,16 +2,14 @@ package com.example.gettingtheexchangerate.service;
 
 import com.example.gettingtheexchangerate.client.GifClient;
 import com.example.gettingtheexchangerate.entity.Gif;
+import com.example.gettingtheexchangerate.properties.PropertiesGif;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,35 +18,24 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class GifServiceImplTest {
 
     @Autowired
-    CurrencyService currencyService;
-
+    GifService gifService;
     @Autowired
     private GifClient gifClient;
-
-    @Value("${gif.api_key}")
-    private String gifApiKey;
+    @Autowired
+    PropertiesGif propertiesGif;
 
     @Test
-    void getGif() {
+    void getGif() throws IOException {
         String currencyCode = "EUR";
-        LocalDate date = LocalDate.now(ZoneId.of("GMT"));
-        String today = formattedDate(date);
-        String yesterday = formattedDate(date.minusDays(1));
-        Double rateCurrencyNow = currencyService.getRateCurrency(today, currencyCode);
-        Double rateCurrencyYesterday = currencyService.getRateCurrency(yesterday, currencyCode);
-        assertNotNull(rateCurrencyNow);
-        assertNotNull(rateCurrencyYesterday);
+        ResponseEntity<Gif> gif = gifService.getGif(currencyCode);
+        assertNotNull(gif);
     }
 
     @Test
     void getRandomGif() {
-        ResponseEntity<Gif> gif = gifClient.getRandomGif(gifApiKey, "rich");
+        ResponseEntity<Gif> gif = gifClient.getRandomGif(propertiesGif.apiKey(), "rich");
         assertEquals(gif.getStatusCode(), HttpStatusCode.valueOf(200));
         assertNotNull(gif.getBody());
         assertEquals(gif.getBody().getData().get("type"), "gif");
-    }
-
-    private String formattedDate(LocalDate date) {
-        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }

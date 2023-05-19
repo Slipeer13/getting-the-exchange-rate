@@ -2,8 +2,8 @@ package com.example.gettingtheexchangerate.service;
 
 import com.example.gettingtheexchangerate.client.CurrencyClient;
 import com.example.gettingtheexchangerate.entity.Currency;
+import com.example.gettingtheexchangerate.properties.PropertiesCurrency;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -13,18 +13,15 @@ import java.util.Objects;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyService{
-    @Value("${base.currency}")
-    private String base;
 
     @Autowired
     private CurrencyClient client;
-
-    @Value("${currency.api_key}")
-    private String currencyApiKey;
+    @Autowired
+    PropertiesCurrency propertiesCurrency;
 
     @Override
     public ResponseEntity<Currency> getCurrency(String date) {
-        return client.getCurrency(date, currencyApiKey, base);
+        return client.getCurrency(date, propertiesCurrency.apiKey(), propertiesCurrency.base());
     }
 
     @Override
