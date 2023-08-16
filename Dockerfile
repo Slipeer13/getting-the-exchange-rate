@@ -1,5 +1,17 @@
+FROM maven:3.6.3-jdk-11-slim AS builder
+
+WORKDIR /app
+
+COPY pom.xml .
+RUN mvn dependency:go-offline
+
+COPY src/ /app/src/
+RUN mvn package -DskipTests
 
 FROM openjdk:17.0.2-jdk-slim-buster
-ARG JAR_FILE=build/libs/getting-the-exchange-rate-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+
+WORKDIR /app
+
+COPY --from=builder /app/target/myapp.jar .
+
+CMD ["java", "-jar", "myapp.jar"]
